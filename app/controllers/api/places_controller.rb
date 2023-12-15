@@ -9,9 +9,8 @@ module Api
           most_recent_download_speed_unit: most_recent_download_speed_unit(place),
           number_measurements: number_measurements(place)
         }
-
+        end
         render(json: { places: places })
-      end
     end
 
     def most_recent__download_speed(place)
