@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import ReactDOM from "react-dom/client";
 
 
@@ -6,7 +6,24 @@ function PlacesList () {
     const [loading, setLoading] = useState(true);
     const [loadedPlaces, setLoadedPlaces] = useState([]);
 
+    useEffect(() => {
+        // Hit the server and get places list
+        const apiEndpoint = "/api/places";
+        fetch(apiEndpoint)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                setLoadedPlaces(data["places"]);
+                setLoading(false);
+            })
+            .catch(error => {
+                console.error("Error fetching places:", error);
+                setLoading(false);
+            });
+    }, []); // Ensure the dependency array is provided to run the effect only once
+
     const loadingSection = (<div>Loading...</div>)
+    console.log(loadedPlaces)
     const dataSection = (
         <div>
             <table>
