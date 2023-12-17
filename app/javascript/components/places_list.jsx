@@ -23,27 +23,28 @@ function PlacesList () {
     }, []); // Ensure the dependency array is provided to run the effect only once
 
     const loadingSection = (<div>Loading...</div>)
-    console.log(loadedPlaces)
+    const spanClass = "text-gray-100 font-semibold"
+    const textSizeClass = "px-16 py-2"
     const dataSection = (
         <div>
             <table className={"mx-auto table-auto"}>
                 <thead>
-                <tr className={"bg-gradient-to-r from-indigo-600 to-purple-600"}>
-                    <th className={"px-16 py-2"}><span className="text-gray-100 font-semibold">Name</span></th>
-                    <th className={"px-16 py-2"}><span className="text-gray-100 font-semibold">City</span></th>
-                    <th className={"px-16 py-2"}><span className="text-gray-100 font-semibold">Recent Upload Speed</span></th>
-                    <th className={"px-16 py-2"}><span className="text-gray-100 font-semibold">Recent Upload Speed Units</span></th>
-                    <th className={"px-16 py-2"}><span className="text-gray-100 font-semibold">Number of Measurements</span></th>
+                <tr className={"bg-gradient-to-r from-gray-400 to-gray-700"}>
+                    <th className={textSizeClass}><span className={spanClass}>Name</span></th>
+                    <th className={textSizeClass}><span className={spanClass}>City</span></th>
+                    <th className={textSizeClass}><span className={spanClass}>Recent Upload Speed</span></th>
+                    <th className={textSizeClass}><span className={spanClass}>Recent Upload Speed Units</span></th>
+                    <th className={textSizeClass}><span className={spanClass}>Number of Measurements</span></th>
                 </tr>
                 </thead>
                 <tbody className={"bg-gray-200"}>
                 {loadedPlaces.map((place, index) => (
                     <tr className={"bg-white border-b-2 border-gray-200"} key={index}>
-                        <td className={"px-16 py-2"}>{place.name}</td>
-                        <td className={"px-16 py-2"}>{place.city}</td>
-                        <td className={"px-16 py-2"}>{place.most_recent_download_speed}</td>
-                        <td className={"px-16 py-2"}>{place.most_recent_download_speed_unit}</td>
-                        <td className={"px-16 py-2"}>{place.number_measurements}</td>
+                        <td className={textSizeClass}>{place.name}</td>
+                        <td className={textSizeClass}>{place.city}</td>
+                        <td className={textSizeClass}>{place.most_recent_download_speed}</td>
+                        <td className={textSizeClass}>{place.most_recent_download_speed_unit}</td>
+                        <td className={textSizeClass}>{place.number_measurements}</td>
                     </tr>
                 ))}
                 </tbody>
