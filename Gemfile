@@ -45,6 +45,7 @@ gem "bootsnap", require: false
 # gem "image_processing", "~> 1.2"
 
 gem "jsbundling-rails"
+gem "cssbundling-rails"
 gem "foreman"
 
 group :development, :test do
