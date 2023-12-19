@@ -1,11 +1,8 @@
 import React, {useEffect, useState} from "react";
 import ReactDOM from "react-dom/client";
 
-function Link(props) {
-    return null;
-}
 
-function renderPlacesPage(body) {
+function renderPlacesPage(body, onSearchTextChange) {
     return (
         <div className="bg-white p-8 rounded-md w-full">
             <div className="flex items-center justify-between pb-6">
@@ -26,14 +23,14 @@ function renderPlacesPage(body) {
                             name=""
                             id=""
                             placeholder="search..."
-                            // onChange={onSearchTextChange}
+                            onChange={onSearchTextChange}
                         />
                     </div>
-                    <div className="lg:ml-40 ml-10 space-x-8">
-                        <Link to="/new-internet-speed">
-                            <button className="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">New Log</button>
-                        </Link>
-                    </div>
+                    {/*<div className="lg:ml-40 ml-10 space-x-8">*/}
+                    {/*    <Link to="/new-internet-speed">*/}
+                    {/*        <button className="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">New Log</button>*/}
+                    {/*    </Link>*/}
+                    {/*</div>*/}
                 </div>
             </div>
             {body}
@@ -43,10 +40,11 @@ function renderPlacesPage(body) {
 function PlacesList () {
     const [loading, setLoading] = useState(true);
     const [loadedPlaces, setLoadedPlaces] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("")
 
     useEffect(() => {
         // Hit the server and get places list
-        const apiEndpoint = "/api/places";
+        const apiEndpoint = `/api/places?search_term=${searchTerm}`;
         fetch(apiEndpoint)
             .then(response => response.json())
             .then(data => {
@@ -58,7 +56,13 @@ function PlacesList () {
                 console.error("Error fetching places:", error);
                 setLoading(false);
             });
-    }, []); // Ensure the dependency array is provided to run the effect only once
+    }, [searchTerm]); // Ensure the dependency array is provided to run the effect only once
+
+    const onSearchTextChange = (e) =>  {
+        console.log("onSearchTextChange has been executed!")
+        setLoading(true);
+        setSearchTerm(e.target.value);
+    }
 
     const loadingSection = (<div>Loading...</div>)
     const toolbarSection = (
@@ -97,9 +101,9 @@ function PlacesList () {
         </div>
     )
     if (loading) {
-        return renderPlacesPage(loadingSection)
+        return renderPlacesPage(loadingSection, onSearchTextChange)
     } else {
-        return renderPlacesPage(dataSection)
+        return renderPlacesPage(dataSection, onSearchTextChange)
     }
 }
 
