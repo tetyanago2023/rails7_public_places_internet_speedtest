@@ -62,5 +62,38 @@ module Api
 
       assert_equal expected_response, parsed_body
     end
+
+    test "recent upload speed, units, and number of measurements are correct" do
+      place = FactoryBot.create(:place, name: "Starbucks", city: "Nairobi")
+      speed1 = FactoryBot.create(
+        :internet_speed,
+        place: place,
+        download_speed: 18.22,
+        download_units: "mbps",
+        created_at: 5.days.ago
+      )
+      speed2 = FactoryBot.create(
+        :internet_speed,
+        place: place,
+        download_speed: 59.10,
+        download_units: "mbps",
+        created_at: 3.days.ago
+      )
+
+      get "/api/places?search_term"
+
+      parsed_body = JSON.parse(response.body)
+      expected_response = {
+        places: [
+          {
+            name: "Starbucks",
+            city: "Nairobi",
+            most_recent_download_speed: 59.10,
+            most_recent_download_units: "mbps",
+            number_of_measurements: 2
+          }.stringify_keys
+        ]
+      }.stringify_keys
+    end
   end
 end
