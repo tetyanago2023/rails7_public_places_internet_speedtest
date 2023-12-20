@@ -51,5 +51,16 @@ module Api
 
       assert_equal expected_response, parsed_body
     end
+
+    test "answers no places if search term does not match any places" do
+      FactoryBot.create(:place, name: "Starbucks")
+
+      get "/api/places?search_term=Blah"
+
+      parsed_body = JSON.parse(response.body)
+      expected_response = { places: [] }.stringify_keys
+
+      assert_equal expected_response, parsed_body
+    end
   end
 end
