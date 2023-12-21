@@ -42,7 +42,7 @@ function renderPlacesPage(body, onSearchTextChange) {
         </div>
     )
 }
-function PlacesList () {
+export default function PlacesList () {
     const [loading, setLoading] = useState(true);
     const [loadedPlaces, setLoadedPlaces] = useState([]);
     const [searchTerm, setSearchTerm] = useState("")
